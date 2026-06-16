@@ -1,0 +1,63 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * FlipDev_GoogleCustomerReviews – GCR survey opt-in template
+ *
+ * Renders the Google Customer Reviews survey opt-in script on the order
+ * confirmation page. No badge is rendered; only the opt-in module is injected.
+ *
+ * Docs: https://support.google.com/merchants/answer/14629205
+ *
+ * @var \FlipDev\GoogleCustomerReviews\Block\SurveyOptIn $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+
+if (!$block->isEnabled()) {
+    return;
+}
+
+$orderId      = $block->getOrderId();
+$email        = $block->getCustomerEmail();
+$country      = $block->getDeliveryCountry();
+$deliveryDate = $block->getEstimatedDeliveryDate();
+
+// All four required fields must be present – silently abort if any is missing.
+if ($orderId === '' || $email === '' || $country === '' || $deliveryDate === '') {
+    return;
+}
+
+$merchantId  = $block->getMerchantId();
+$optInStyle  = $block->getOptInStyle();
+$languageCode = $block->getLanguageCode();
+?>
+<!-- BEGIN GCR Language Code -->
+<script>
+    window.___gcfg = {
+        lang: <?= $escaper->escapeJs($languageCode) ?>
+    };
+</script>
+<!-- END GCR Language Code -->
+
+<!-- BEGIN GCR Opt-in Module Code -->
+<script src="https://apis.google.com/js/platform.js?onload=renderOptIn"
+        async
+        defer></script>
+<script>
+    window.renderOptIn = function () {
+        window.gapi.load('surveyoptin', function () {
+            window.gapi.surveyoptin.render({
+                // Required fields
+                merchant_id:            <?= (int) $merchantId ?>,
+                order_id:               <?= $escaper->escapeJs($orderId) ?>,
+                email:                  <?= $escaper->escapeJs($email) ?>,
+                delivery_country:       <?= $escaper->escapeJs($country) ?>,
+                estimated_delivery_date:<?= $escaper->escapeJs($deliveryDate) ?>,
+                // Optional: dialog position
+                opt_in_style:           <?= $escaper->escapeJs($optInStyle) ?>
+            });
+        });
+    };
+</script>
+<!-- END GCR Opt-in Module Code -->

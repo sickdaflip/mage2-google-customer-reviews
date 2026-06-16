@@ -1,0 +1,28 @@
+{
+    "name": "sickdaflip/mage2-google-customer-reviews",
+    "description": "Injects the Google Customer Reviews survey opt-in script on the order success page.",
+    "type": "magento2-module",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "FlipDev",
+            "email": "philippbreitsprecher@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "magento/framework": "^103.0",
+        "magento/module-checkout": "*",
+        "magento/module-sales": "*",
+        "magento/module-store": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "FlipDev\\GoogleCustomerReviews\\": "src/"
+        },
+        "files": [
+            "registration.php"
+        ]
+    },
+    "version": "1.0.0"
+}

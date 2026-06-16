@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <flipdev_gcr>
+            <general>
+                <enabled>0</enabled>
+                <merchant_id></merchant_id>
+                <delivery_days>5</delivery_days>
+                <opt_in_style>CENTER_DIALOG</opt_in_style>
+                <language>auto</language>
+            </general>
+        </flipdev_gcr>
+    </default>
+</config>

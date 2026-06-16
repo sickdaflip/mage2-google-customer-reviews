@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!--
+            Injects the GCR survey opt-in script at the very end of the
+            checkout success page body, as required by Google's integration guide.
+        -->
+        <referenceContainer name="before.body.end">
+            <block class="FlipDev\GoogleCustomerReviews\Block\SurveyOptIn"
+                   name="flipdev.gcr.survey_optin"
+                   template="FlipDev_GoogleCustomerReviews::gcr/survey-optin.phtml"
+                   cacheable="false"/>
+        </referenceContainer>
+    </body>
+</page>

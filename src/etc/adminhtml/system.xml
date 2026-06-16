@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="flipdev" translate="label" sortOrder="900">
+            <label>FlipDev</label>
+        </tab>
+        <section id="flipdev_gcr" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <tab>flipdev</tab>
+            <label>Google Customer Reviews</label>
+            <resource>FlipDev_GoogleCustomerReviews::config</resource>
+
+            <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Survey Opt-in</label>
+
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Survey Opt-in</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="merchant_id" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Merchant Center ID</label>
+                    <comment>Your Google Merchant Center ID (numeric). Found top-right in Merchant Center.</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+
+                <field id="delivery_days" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Estimated Delivery Days</label>
+                    <comment>Number of business days after order placement to estimate delivery date. Default: 5.</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+
+                <field id="opt_in_style" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Opt-in Dialog Style</label>
+                    <comment>How the survey opt-in dialog is displayed to the customer.</comment>
+                    <source_model>FlipDev\GoogleCustomerReviews\Model\Config\Source\OptInStyle</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+
+                <field id="language" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Survey Language</label>
+                    <comment>Leave on "Auto (Store Locale)" to derive language from the store locale automatically.</comment>
+                    <source_model>FlipDev\GoogleCustomerReviews\Model\Config\Source\Language</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
