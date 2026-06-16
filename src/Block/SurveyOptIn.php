@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace FlipDev\GoogleCustomerReviews\Block;
 
 use FlipDev\GoogleCustomerReviews\Model\Config\Provider;
+use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Checkout\Model\Session as CheckoutSession;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Sales\Api\Data\OrderInterface;
@@ -42,6 +44,7 @@ class SurveyOptIn extends Template
         private readonly Provider $configProvider,
         private readonly CheckoutSession $checkoutSession,
         private readonly StoreManagerInterface $storeManager,
+        private readonly ProductRepositoryInterface $productRepository,
         array $data = []
     ) {
         parent::__construct($context, $data);
@@ -162,7 +165,59 @@ class SurveyOptIn extends Template
         return $current->format('Y-m-d');
     }
 
+    /**
+     * Returns the unique, non-empty list of GTINs for the ordered products,
+     * read from the configured product attribute. Returns an empty array when
+     * GTIN sending is disabled (no attribute configured) or none are found.
+     *
+     * @return string[]
+     */
+    public function getProductGtins(): array
+    {
+        $attribute = $this->configProvider->getGtinAttribute();
+        if ($attribute === '') {
+            return [];
+        }
+
+        $order = $this->getOrder();
+        if ($order === null) {
+            return [];
+        }
+
+        $gtins = [];
+        foreach ($order->getItems() ?? [] as $item) {
+            $gtin = $this->loadGtin((int) $item->getProductId(), $attribute);
+            if ($gtin !== '') {
+                // Keyed assignment deduplicates GTINs shared across items.
+                $gtins[$gtin] = true;
+            }
+        }
+
+        return array_keys($gtins);
+    }
+
     // ── Helpers ──────────────────────────────────────────────────────────────
+
+    /**
+     * Loads a single product's GTIN value from the given attribute code.
+     * Returns an empty string when the product or attribute value is missing.
+     */
+    private function loadGtin(int $productId, string $attribute): string
+    {
+        if ($productId <= 0) {
+            return '';
+        }
+
+        try {
+            $product = $this->productRepository->getById($productId);
+        } catch (NoSuchEntityException) {
+            return '';
+        }
+
+        $value = $product->getData($attribute);
+
+        return $value !== null ? trim((string) $value) : '';
+    }
 
     /**
      * Converts a Magento locale string (e.g. "de_DE", "en_GB") to a GCR

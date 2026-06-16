@@ -17,27 +17,28 @@ class Provider
     private const XML_DELIVERY_DAYS = 'flipdev_gcr/general/delivery_days';
     private const XML_OPT_IN_STYLE  = 'flipdev_gcr/general/opt_in_style';
     private const XML_LANGUAGE      = 'flipdev_gcr/general/language';
+    private const XML_GTIN_ATTRIBUTE = 'flipdev_gcr/general/gtin_attribute';
 
     public function __construct(
         private readonly ScopeConfigInterface $scopeConfig
     ) {}
 
-    public function isEnabled(string $scopeCode = null): bool
+    public function isEnabled(?string $scopeCode = null): bool
     {
         return $this->scopeConfig->isSetFlag(self::XML_ENABLED, ScopeInterface::SCOPE_STORE, $scopeCode);
     }
 
-    public function getMerchantId(string $scopeCode = null): string
+    public function getMerchantId(?string $scopeCode = null): string
     {
         return (string) $this->scopeConfig->getValue(self::XML_MERCHANT_ID, ScopeInterface::SCOPE_STORE, $scopeCode);
     }
 
-    public function getDeliveryDays(string $scopeCode = null): int
+    public function getDeliveryDays(?string $scopeCode = null): int
     {
         return (int) ($this->scopeConfig->getValue(self::XML_DELIVERY_DAYS, ScopeInterface::SCOPE_STORE, $scopeCode) ?: 5);
     }
 
-    public function getOptInStyle(string $scopeCode = null): string
+    public function getOptInStyle(?string $scopeCode = null): string
     {
         return (string) ($this->scopeConfig->getValue(self::XML_OPT_IN_STYLE, ScopeInterface::SCOPE_STORE, $scopeCode) ?: 'CENTER_DIALOG');
     }
@@ -45,8 +46,17 @@ class Provider
     /**
      * Returns the configured language code, or "auto" to derive from store locale.
      */
-    public function getLanguage(string $scopeCode = null): string
+    public function getLanguage(?string $scopeCode = null): string
     {
         return (string) ($this->scopeConfig->getValue(self::XML_LANGUAGE, ScopeInterface::SCOPE_STORE, $scopeCode) ?: 'auto');
+    }
+
+    /**
+     * Returns the product attribute code that holds the GTIN, or an empty
+     * string when sending product GTINs is disabled.
+     */
+    public function getGtinAttribute(?string $scopeCode = null): string
+    {
+        return trim((string) $this->scopeConfig->getValue(self::XML_GTIN_ATTRIBUTE, ScopeInterface::SCOPE_STORE, $scopeCode));
     }
 }
