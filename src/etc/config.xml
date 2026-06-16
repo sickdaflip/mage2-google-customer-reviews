@@ -9,6 +9,7 @@
                 <delivery_days>5</delivery_days>
                 <opt_in_style>CENTER_DIALOG</opt_in_style>
                 <language>auto</language>
+                <gtin_attribute>gtin</gtin_attribute>
             </general>
         </flipdev_gcr>
     </default>

@@ -37,13 +37,15 @@ bin/magento cache:flush
 | Estimated Delivery Days | Business days after order placement (weekends skipped). Default: `5` |
 | Opt-in Dialog Style | Position of the survey dialog (`CENTER_DIALOG`, `BOTTOM_RIGHT_DIALOG`, etc.) |
 | Survey Language | GCR language code, or `Auto` to derive from store locale |
+| Product GTIN Attribute | Product attribute code holding the GTIN (e.g. `gtin`, `ean`, `upc`). Sent to Google to enable product reviews. Leave empty to disable. |
 
 ## How It Works
 
 1. Customer places order → lands on `checkout/onepage/success`
 2. Block reads order data from `Magento\Checkout\Model\Session::getLastRealOrder()`
 3. Template renders the GCR `platform.js` + `surveyoptin.render()` call before `</body>`
-4. Google sends the customer a survey email after the estimated delivery date
+4. When a GTIN attribute is configured, the ordered products' GTINs are passed along to enable product reviews
+5. Google sends the customer a survey email after the estimated delivery date
 
 ## Uninstall
 

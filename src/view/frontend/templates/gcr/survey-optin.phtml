@@ -31,6 +31,7 @@ if ($orderId === '' || $email === '' || $country === '' || $deliveryDate === '')
 $merchantId  = $block->getMerchantId();
 $optInStyle  = $block->getOptInStyle();
 $languageCode = $block->getLanguageCode();
+$productGtins = $block->getProductGtins();
 ?>
 <!-- BEGIN GCR Language Code -->
 <script>
@@ -55,7 +56,10 @@ $languageCode = $block->getLanguageCode();
                 delivery_country:       '<?= $escaper->escapeJs($country) ?>',
                 estimated_delivery_date:'<?= $escaper->escapeJs($deliveryDate) ?>',
                 // Optional: dialog position
-                opt_in_style:           '<?= $escaper->escapeJs($optInStyle) ?>'
+                opt_in_style:           '<?= $escaper->escapeJs($optInStyle) ?>'<?php if ($productGtins): ?>,
+                // Optional: ordered products (enables product review collection)
+                products: [<?php foreach ($productGtins as $i => $gtin): ?><?= $i > 0 ? ', ' : '' ?>{"gtin": "<?= $escaper->escapeJs($gtin) ?>"}<?php endforeach; ?>]<?php endif; ?>
+
             });
         });
     };

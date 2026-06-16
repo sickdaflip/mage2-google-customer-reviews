@@ -21,6 +21,7 @@
                 <field id="merchant_id" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Merchant Center ID</label>
                     <comment>Your Google Merchant Center ID (numeric). Found top-right in Merchant Center.</comment>
+                    <validate>required-entry validate-digits</validate>
                     <depends>
                         <field id="enabled">1</field>
                     </depends>
@@ -29,6 +30,7 @@
                 <field id="delivery_days" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Estimated Delivery Days</label>
                     <comment>Number of business days after order placement to estimate delivery date. Default: 5.</comment>
+                    <validate>validate-digits validate-greater-than-zero</validate>
                     <depends>
                         <field id="enabled">1</field>
                     </depends>
@@ -47,6 +49,14 @@
                     <label>Survey Language</label>
                     <comment>Leave on "Auto (Store Locale)" to derive language from the store locale automatically.</comment>
                     <source_model>FlipDev\GoogleCustomerReviews\Model\Config\Source\Language</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+
+                <field id="gtin_attribute" translate="label comment" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product GTIN Attribute</label>
+                    <comment>Product attribute code holding the GTIN (e.g. "gtin", "ean", "upc"). Sent to Google to enable product reviews. Leave empty to disable.</comment>
                     <depends>
                         <field id="enabled">1</field>
                     </depends>
