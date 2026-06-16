@@ -35,7 +35,7 @@ $languageCode = $block->getLanguageCode();
 <!-- BEGIN GCR Language Code -->
 <script>
     window.___gcfg = {
-        lang: <?= $escaper->escapeJs($languageCode) ?>
+        lang: '<?= $escaper->escapeJs($languageCode) ?>'
     };
 </script>
 <!-- END GCR Language Code -->
@@ -50,12 +50,12 @@ $languageCode = $block->getLanguageCode();
             window.gapi.surveyoptin.render({
                 // Required fields
                 merchant_id:            <?= (int) $merchantId ?>,
-                order_id:               <?= $escaper->escapeJs($orderId) ?>,
-                email:                  <?= $escaper->escapeJs($email) ?>,
-                delivery_country:       <?= $escaper->escapeJs($country) ?>,
-                estimated_delivery_date:<?= $escaper->escapeJs($deliveryDate) ?>,
+                order_id:               '<?= $escaper->escapeJs($orderId) ?>',
+                email:                  '<?= $escaper->escapeJs($email) ?>',
+                delivery_country:       '<?= $escaper->escapeJs($country) ?>',
+                estimated_delivery_date:'<?= $escaper->escapeJs($deliveryDate) ?>',
                 // Optional: dialog position
-                opt_in_style:           <?= $escaper->escapeJs($optInStyle) ?>
+                opt_in_style:           '<?= $escaper->escapeJs($optInStyle) ?>'
             });
         });
     };
