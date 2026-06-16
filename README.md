@@ -15,13 +15,16 @@ Injects the **Google Customer Reviews survey opt-in** script on the Magento 2 or
 |---|---|
 | PHP | ^8.4 |
 | Magento | ^2.4.8 |
+| [FlipDev_Core](https://github.com/sickdaflip/mage2-core) | * (provides the shared **FlipDev** admin tab) |
 
 ## Installation
 
 ```bash
+# FlipDev_Core provides the shared "FlipDev" admin tab and is required.
+composer config repositories.flipdev-core vcs https://github.com/sickdaflip/mage2-core
 composer config repositories.flipdev-gcr vcs https://github.com/sickdaflip/mage2-google-customer-reviews
 composer require sickdaflip/mage2-google-customer-reviews
-bin/magento module:enable FlipDev_GoogleCustomerReviews
+bin/magento module:enable FlipDev_Core FlipDev_GoogleCustomerReviews
 bin/magento setup:upgrade
 bin/magento cache:flush
 ```

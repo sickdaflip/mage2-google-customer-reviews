@@ -2,9 +2,6 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="flipdev" translate="label" sortOrder="900">
-            <label>FlipDev</label>
-        </tab>
         <section id="flipdev_gcr" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
             <tab>flipdev</tab>
             <label>Google Customer Reviews</label>
